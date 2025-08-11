@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aayush Neupane — Professional Portfolio</title>
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --------------------
+     Theme tokens
+     -------------------- */
+      :root {
+        --max-w: 1100px;
+        --bg-from: #071026;
+        --bg-to: #0a1830;
+        --card-bg: rgba(255, 255, 255, 0.03);
+        --muted: rgba(255, 255, 255, 0.7);
+        --accent-1: #4fb6e6; /* teal */
+        --accent-2: #7a6cff; /* purple */
+        --accent-3: #7bd389; /* green */
+        --glass-border: rgba(255, 255, 255, 0.06);
+        --radius: 16px;
+        --mono: "Space Mono", monospace;
+        --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+      }
+
+      /* --------------------
+     Base layout
+     -------------------- */
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        color: #e7f2fb;
+        background: linear-gradient(120deg, var(--bg-from), var(--bg-to));
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        padding: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      .page {
+        width: 100%;
+        max-width: var(--max-w);
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 28px;
+        align-items: start;
+      }
+      @media (max-width: 980px) {
+        .page {
+          grid-template-columns: 1fr;
+          padding: 12px;
+        }
+      }
+
+      /* subtle grid background */
+      .bg-grid {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.06;
+        background-image: linear-gradient(
+            transparent 95%,
+            rgba(255, 255, 255, 0.02) 95%
+          ),
+          linear-gradient(90deg, transparent 95%, rgba(255, 255, 255, 0.02) 95%);
+        background-size: 36px 36px, 36px 36px;
+        animation: gridShift 18s linear infinite;
+        mix-blend-mode: overlay;
+      }
+      @keyframes gridShift {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-36px);
+        }
+      }
+
+      /* --------------------
+     Cards (glass)
+     -------------------- */
+      .card {
+        position: relative;
+        background: linear-gradient(
+          180deg,
+          var(--card-bg),
+          rgba(255, 255, 255, 0.01)
+        );
+        border-radius: var(--radius);
+        border: 1px solid var(--glass-border);
+        padding: 20px;
+        box-shadow: 0 12px 40px rgba(3, 8, 20, 0.6);
+        backdrop-filter: blur(10px) saturate(120%);
+        -webkit-backdrop-filter: blur(10px) saturate(120%);
+      }
+      .card .heading {
+        font-family: var(--mono);
+        font-weight: 700;
+        letter-spacing: 0.6px;
+        color: #dfeaf8;
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+      h1 {
+        margin: 0;
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: 24px;
+        color: #eaf6ff;
+      }
+      .sub {
+        color: var(--muted);
+        font-size: 14px;
+        margin-top: 6px;
+      }
+
+      /* --------------------
+     Left column: hero & timeline (main)
+     -------------------- */
+      .hero-card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .profile {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+      .avatar {
+        width: 76px;
+        height: 76px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: 22px;
+        color: #fff;
+        background: linear-gradient(135deg, var(--accent-2), var(--accent-1));
+        box-shadow: 0 10px 30px rgba(7, 10, 26, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 6px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 13px;
+        color: #061126;
+        background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+        border: none;
+        text-decoration: none;
+      }
+      .btn.ghost {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      /* quick facts */
+      .facts {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .fact-pill {
+        padding: 8px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.02);
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      /* timeline (inline horizontal bands) */
+      .timeline {
+        margin-top: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .t-item {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .t-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: var(--mono);
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .t-bar {
+        height: 34px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.015),
+          rgba(255, 255, 255, 0.008)
+        );
+        border-radius: 8px;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .t-fill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 0%;
+        border-radius: 8px;
+        background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+        box-shadow: 0 8px 24px rgba(10, 30, 50, 0.35);
+        transition: width 900ms cubic-bezier(0.2, 0.9, 0.29, 1);
+      }
+
+      /* --------------------
+     Right column: skills dashboard
+     -------------------- */
+      .skills-card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+      }
+      .rings {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 640px) {
+        .rings {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .ring {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.01);
+        padding: 10px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.02);
+      }
+      .ring svg {
+        width: 88px;
+        height: 88px;
+        flex-shrink: 0;
+      }
+      .ring .meta {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .skill-title {
+        font-family: var(--mono);
+        font-weight: 700;
+        color: #eaf6ff;
+      }
+      .skill-desc {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      /* contact form (at bottom area) */
+      .contact-form {
+        margin-top: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .input,
+      textarea {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        padding: 10px;
+        border-radius: 8px;
+        color: #eaf6ff;
+        font-size: 14px;
+      }
+      .input::placeholder,
+      textarea::placeholder {
+        color: rgba(255, 255, 255, 0.45);
+      }
+
+      /* footer */
+      .foot {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        text-align: center;
+      }
+
+      /* reveal helpers */
+      .fade {
+        opacity: 0;
+        transform: translateY(8px);
+        transition: all 0.6s cubic-bezier(0.2, 0.9, 0.29, 1);
+      }
+      .fade.show {
+        opacity: 1;
+        transform: none;
+      }
+
+      @media (max-width: 980px) {
+        .page {
+          padding-bottom: 60px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden></div>
+
+    <main class="page" role="main">
+      <!-- LEFT: Hero + timeline -->
+      <section class="card hero-card fade" id="leftCard">
+        <div class="profile">
+          <div class="avatar">AN</div>
+          <div>
+            <h1>Aayush Neupane</h1>
+            <div class="sub">SQL Developer · Data-minded Engineer</div>
+          </div>
+        </div>
+
+        <p style="margin-top: 10px; color: var(--muted); line-height: 1.45">
+          I don't code as a programmer - I do it for fun and mostly with help. I
+          focus on turning raw data into reliable, repeatable insights and
+          operational solutions.
+        </p>
+
+        <div class="actions">
+          <a class="btn" href="mailto:hello_aayush@outlook.com">Contact</a>
+          <a
+            class="btn ghost"
+            href="https://github.com/bytecanvas"
+            target="_blank"
+            >GitHub</a
+          >
+        </div>
+
+        <div style="margin-top: 12px">
+          <div class="heading">Quick Facts</div>
+          <div class="facts" id="factsList">
+            <!-- filled by JS -->
+          </div>
+        </div>
+
+        <div style="margin-top: 18px">
+          <div class="heading">Experience</div>
+          <div class="timeline" id="timeline">
+            <!-- timeline items (most recent first) -->
+            <div class="t-item">
+              <div class="t-meta">
+                <div style="font-weight: 700">SQL Developer</div>
+                <div>2022 — Present</div>
+              </div>
+              <div class="t-bar" data-percent="100">
+                <div class="t-fill"></div>
+              </div>
+            </div>
+
+            <div class="t-item">
+              <div class="t-meta">
+                <div style="font-weight: 700">IT Support Engineer</div>
+                <div>2021 — 2022</div>
+              </div>
+              <div class="t-bar" data-percent="55">
+                <div class="t-fill"></div>
+              </div>
+            </div>
+
+            <div class="t-item">
+              <div class="t-meta">
+                <div style="font-weight: 700">Jr Linux Sys Admin</div>
+                <div>2019 — 2021</div>
+              </div>
+              <div class="t-bar" data-percent="65">
+                <div class="t-fill"></div>
+              </div>
+            </div>
+
+            <div class="t-item">
+              <div class="t-meta">
+                <div style="font-weight: 700">Hardware Engineer</div>
+                <div>2017 — 2019</div>
+              </div>
+              <div class="t-bar" data-percent="45">
+                <div class="t-fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: Skills + contact form -->
+      <aside class="card skills-card fade" id="rightCard">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div class="heading">Skills Dashboard</div>
+        </div>
+
+        <div class="rings" id="rings">
+          <!-- rings created by JS -->
+        </div>
+
+        <div style="margin-top: 10px">
+          <div class="heading" style="margin-bottom: 8px">Contact</div>
+          <form class="contact-form" onsubmit="handleContact(event)">
+            <input
+              class="input"
+              id="name"
+              name="name"
+              placeholder="Your name"
+              required
+            />
+            <input
+              class="input"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Your email"
+              required
+            />
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              class="input"
+              placeholder="Message — how can I help?"
+              required
+            ></textarea>
+            <div style="display: flex; gap: 8px; align-items: center">
+              <button type="submit" class="btn">Send</button>
+              <button
+                type="button"
+                class="btn ghost"
+                onclick="mailtoFallback()"
+              >
+                Send via Mail
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="foot" style="margin-top: 12px">
+          © 2025 Aayush Neupane · Built with clean data & attention to detail
+        </div>
+      </aside>
+    </main>
+
+    <script>
+      /* =================================================
+   Professional Quick Facts (random on each load)
+   ================================================= */
+      const professionalFacts = [
+        "SQL Developer focused on building reliable reporting layers.",
+        "Experienced resolving complex incidents in mixed environments.",
+        "Skilled in hardware troubleshooting and board-level debugging.",
+        "Comfortable administering Linux servers and automating tasks.",
+        "Excel power user — reports, pivot tables, and practical automation.",
+        "Delivered cross-functional solutions bridging infra and data teams.",
+        "Practice writing efficient queries and optimizing performance.",
+        "Experience creating ETL-ready views and validation checks.",
+        "Strong emphasis on clarity, repeatability and testing.",
+        "Collaborative approach: explain technical work in plain language.",
+      ];
+
+      function renderFacts() {
+        const container = document.getElementById("factsList");
+        container.innerHTML = "";
+        // pick 3 different facts randomly
+        const picks = [];
+        while (picks.length < 3) {
+          const n = Math.floor(Math.random() * professionalFacts.length);
+          if (!picks.includes(n)) picks.push(n);
+        }
+        picks.forEach((i) => {
+          const s = document.createElement("span");
+          s.className = "fact-pill";
+          s.textContent = professionalFacts[i];
+          container.appendChild(s);
+        });
+      }
+      renderFacts();
+
+      /* =================================================
+   Skills: circular SVG progress rings (clean gradients)
+   ================================================= */
+      const skills = [
+        {
+          id: "hardware",
+          name: "Hardware",
+          pct: 90,
+          desc: "Hands-on troubleshooting & qualification",
+          color1: "#ffd6a5",
+          color2: "#ffad60",
+        },
+        {
+          id: "excel",
+          name: "Excel",
+          pct: 80,
+          desc: "Reports, pivot tables, automation",
+          color1: "#c5f7d4",
+          color2: "#66d19f",
+        },
+        {
+          id: "linux",
+          name: "Linux",
+          pct: 60,
+          desc: "Server ops & shell automation",
+          color1: "#9bd3ff",
+          color2: "#6c9bff",
+        },
+        {
+          id: "sql",
+          name: "SQL",
+          pct: 85,
+          desc: "Queries, optimization, reporting",
+          color1: "#d5c0ff",
+          color2: "#9b7dff",
+        },
+      ];
+
+      function createRingCard(skill) {
+        const wrap = document.createElement("div");
+        wrap.className = "ring";
+
+        // SVG
+        const ns = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(ns, "svg");
+        svg.setAttribute("viewBox", "0 0 100 100");
+        svg.setAttribute("width", "88");
+        svg.setAttribute("height", "88");
+
+        const def = document.createElementNS(ns, "defs");
+        const grad = document.createElementNS(ns, "linearGradient");
+        grad.setAttribute("id", "g-" + skill.id);
+        grad.setAttribute("x1", "0");
+        grad.setAttribute("x2", "1");
+        const stop1 = document.createElementNS(ns, "stop");
+        stop1.setAttribute("offset", "0");
+        stop1.setAttribute("stop-color", skill.color1);
+        const stop2 = document.createElementNS(ns, "stop");
+        stop2.setAttribute("offset", "1");
+        stop2.setAttribute("stop-color", skill.color2);
+        grad.appendChild(stop1);
+        grad.appendChild(stop2);
+        def.appendChild(grad);
+        svg.appendChild(def);
+
+        const bgCircle = document.createElementNS(ns, "circle");
+        bgCircle.setAttribute("cx", "50");
+        bgCircle.setAttribute("cy", "50");
+        bgCircle.setAttribute("r", "40");
+        bgCircle.setAttribute("stroke", "rgba(255,255,255,0.04)");
+        bgCircle.setAttribute("stroke-width", "10");
+        bgCircle.setAttribute("fill", "none");
+        svg.appendChild(bgCircle);
+
+        const prog = document.createElementNS(ns, "circle");
+        prog.setAttribute("cx", "50");
+        prog.setAttribute("cy", "50");
+        prog.setAttribute("r", "40");
+        prog.setAttribute("stroke", "url(#g-" + skill.id + ")");
+        prog.setAttribute("stroke-width", "10");
+        prog.setAttribute("stroke-linecap", "round");
+        prog.setAttribute("fill", "none");
+        prog.setAttribute("transform", "rotate(-90 50 50)");
+        // dasharray for circumference: 2πr ≈ 251.2 for r=40
+        prog.setAttribute("stroke-dasharray", "251.2");
+        prog.setAttribute("stroke-dashoffset", "251.2");
+        svg.appendChild(prog);
+
+        // center label (percentage)
+        const foreign = document.createElementNS(ns, "foreignObject");
+        foreign.setAttribute("x", "0");
+        foreign.setAttribute("y", "0");
+        foreign.setAttribute("width", "100");
+        foreign.setAttribute("height", "100");
+        const foDiv = document.createElement("div");
+        foDiv.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+        foDiv.style.display = "flex";
+        foDiv.style.alignItems = "center";
+        foDiv.style.justifyContent = "center";
+        foDiv.style.height = "100%";
+        foDiv.style.fontFamily = "Space Mono, monospace";
+        foDiv.style.fontWeight = "700";
+        foDiv.style.fontSize = "18px";
+        foDiv.style.color = "#eaf6ff";
+        foDiv.textContent = "0%";
+        foreign.appendChild(foDiv);
+        svg.appendChild(foreign);
+
+        // meta column
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        const title = document.createElement("div");
+        title.className = "skill-title";
+        title.textContent = skill.name;
+        const desc = document.createElement("div");
+        desc.className = "skill-desc";
+        desc.textContent = skill.desc;
+        meta.appendChild(title);
+        meta.appendChild(desc);
+
+        wrap.appendChild(svg);
+        wrap.appendChild(meta);
+
+        return { wrap, prog, foDiv, pct: skill.pct };
+      }
+
+      // build rings grid
+      const ringsContainer = document.getElementById("rings");
+      const ringItems = [];
+      skills.forEach((s) => {
+        const { wrap, prog, foDiv, pct } = createRingCard(s);
+        ringsContainer.appendChild(wrap);
+        ringItems.push({ prog, foDiv, pct });
+      });
+
+      // animate rings (stroke-dashoffset)
+      function animateRings() {
+        ringItems.forEach((r, i) => {
+          const circumference = 2 * Math.PI * 40; // ~251.2
+          const targetOffset = circumference * (1 - r.pct / 100);
+          let start = null;
+          const duration = 900;
+          const step = (ts) => {
+            if (!start) start = ts;
+            const t = Math.min(1, (ts - start) / duration);
+            // easeOutQuad
+            const eased = 1 - (1 - t) * (1 - t);
+            const current = circumference * (1 - (eased * r.pct) / 100);
+            r.prog.style.strokeDashoffset = current;
+            r.foDiv.textContent = Math.round(eased * r.pct) + "%";
+            if (t < 1) requestAnimationFrame(step);
+            else {
+              r.prog.style.strokeDashoffset = targetOffset;
+              r.foDiv.textContent = r.pct + "%";
+            }
+          };
+          setTimeout(() => requestAnimationFrame(step), i * 160); // stagger
+        });
+      }
+
+      /* =================================================
+   Horizontal timeline fill animation
+   ================================================= */
+      function animateTimeline() {
+        document.querySelectorAll(".t-bar").forEach((bar, i) => {
+          const fill = bar.querySelector(".t-fill");
+          const pct = Number(bar.dataset.percent) || 0;
+          fill.style.width = "0%";
+          setTimeout(() => (fill.style.width = pct + "%"), 240 * i);
+        });
+      }
+
+      /* =================================================
+   IntersectionObserver to reveal and trigger animations
+   ================================================= */
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("show");
+              // when left or right cards show, trigger animations
+              if (e.target.id === "leftCard" || e.target.id === "rightCard") {
+                animateRings();
+                animateTimeline();
+              }
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      document.querySelectorAll(".fade").forEach((el) => observer.observe(el));
+      observer.observe(document.getElementById("leftCard"));
+      observer.observe(document.getElementById("rightCard"));
+
+      /* =================================================
+   Contact form handlers (HTML-only fallback + mailto)
+   ================================================= */
+      function mailtoFallback() {
+        const name = document.getElementById("name").value || "";
+        const email = document.getElementById("email").value || "";
+        const message = document.getElementById("message").value || "";
+        const subject = encodeURIComponent(`Contact from portfolio — ${name}`);
+        const body = encodeURIComponent(
+          `From: ${name} <${email}>\n\n${message}`
+        );
+        window.location.href = `mailto:hello_aayush@outlook.com?subject=${subject}&body=${body}`;
+      }
+
+      function handleContact(e) {
+        e.preventDefault();
+        // For now show an unobtrusive confirmation and fallback option
+        const info = document.getElementById("contactInfo");
+        info.textContent =
+          'Thank you — your message is ready to be sent. Use "Send via Mail" to deliver this message, or hook this form to your backend.';
+        info.style.color = "#bfe9d6";
+        // optionally pre-fill mailto for convenience
+        // you may add backend wiring here.
+      }
+
+      /* =================================================
+   Respect reduced motion
+   ================================================= */
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document
+          .querySelectorAll(".fade")
+          .forEach((el) => el.classList.add("show"));
+        ringItems.forEach((r, i) => {
+          r.prog.style.transition = "none";
+          r.prog.style.strokeDashoffset = 2 * Math.PI * 40 * (1 - r.pct / 100);
+          r.foDiv.textContent = r.pct + "%";
+        });
+        document
+          .querySelectorAll(".t-fill")
+          .forEach(
+            (f) => (f.style.width = f.parentElement.dataset.percent + "%")
+          );
+      }
+
+      /* Kickstart on load (in case elements already visible) */
+      window.addEventListener("load", () => {
+        // ensure cards visible for users who don't scroll immediately
+        document.getElementById("leftCard").classList.add("show");
+        document.getElementById("rightCard").classList.add("show");
+        // animate
+        animateRings();
+        animateTimeline();
+      });
+    </script>
+  </body>
+</html>
