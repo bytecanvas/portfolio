@@ -15,8 +15,7 @@ It showcases my work, skills, and contact details, all hosted seamlessly on **Gi
 
 
 ## 🚀 Live Demo
-[![Portfolio Preview](https://api.microlink.io/?url=https%3A%2F%2Fbytecanvas.github.io%2Fportfolio&screenshot=true&meta=false)](https://bytecanvas.github.io/portfolio/)
-🔗 **Visit Here:** [https://bytecanvas.github.io/portfolio/](https://bytecanvas.github.io/portfolio/)
+🔗 **Visit Here:** [![Portfolio Preview](https://api.microlink.io/?url=https%3A%2F%2Fbytecanvas.github.io%2Fportfolio&screenshot=true&meta=false)](https://bytecanvas.github.io/portfolio/)
 
 ---
 
